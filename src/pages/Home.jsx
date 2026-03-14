@@ -1,10 +1,16 @@
+import Navbar from "../components/Navbar";
+
 function Home() {
   return (
     <div>
-      <h1>Welcome to Movie Discovery</h1>
-        <p>..Discove Popular Movies Here..</p>
+
+      <Navbar />
+
+      <div className="pt-24 text-center">
+      </div>
+
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
