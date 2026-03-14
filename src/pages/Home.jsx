@@ -1,7 +1,8 @@
 function Home() {
   return (
     <div>
-      <h2>Welcome to Movie Discovery</h2>
+      <h1>Welcome to Movie Discovery</h1>
+        <p>..Discove Popular Movies Here..</p>
     </div>
   )
 }
