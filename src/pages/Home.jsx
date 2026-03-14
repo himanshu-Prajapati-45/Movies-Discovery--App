@@ -1,13 +1,15 @@
 import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+
 
 function Home() {
   return (
     <div>
 
       <Navbar />
+      <Hero />
 
-      <div className="pt-24 text-center">
-      </div>
+      
 
     </div>
   );
