@@ -18,4 +18,12 @@ export const getMovieDetails = (id) => {
   return api.get(`/movie/${id}?api_key=${API_KEY}`);
 };
 
+export const getTrendingMovies = () => {
+  return api.get(`/trending/movie/week?api_key=${API_KEY}`);
+};
+
+export const getTopRatedMovies = () => {
+  return api.get(`/movie/top_rated?api_key=${API_KEY}`);
+}
+
 export default api;

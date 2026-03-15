@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 function Navbar({ onSearch }) {
 
   return (
@@ -14,17 +15,17 @@ function Navbar({ onSearch }) {
         {/* Navigation */}
         <div className="hidden md:flex items-center gap-8 text-gray-200 font-medium">
 
-          <button className="hover:text-red-500 transition duration-200">
+          <Link to = "/" className="hover:text-red-500 transition duration-200">
             Home
-          </button>
+          </Link>
 
-          <button className="hover:text-red-500 transition duration-200">
+          <Link to="/trending" className="hover:text-red-500 transition duration-200">
             Trending
-          </button>
+          </Link>
 
-          <button className="hover:text-red-500 transition duration-200">
+          <Link to="/toprated" className="hover:text-red-500 transition duration-200">
             Top Rated
-          </button>
+          </Link>
 
         </div>
 

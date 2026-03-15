@@ -16,7 +16,7 @@ function Hero({ movies = [], onBrowseClick }) {
 
   return (
     <section
-      className="relative min-h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden"
+      className="mt-10 relative min-h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden"
       style={{
         backgroundImage: `url(${backdrop})`,
         backgroundSize: "cover",
@@ -24,7 +24,7 @@ function Hero({ movies = [], onBrowseClick }) {
       }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"></div>
+      <div className="absolute inset-0 bg-black/15 backdrop-blur-[1px]"></div>
 
       {/* Top gradient fade (merge with page background) */}
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent"></div>

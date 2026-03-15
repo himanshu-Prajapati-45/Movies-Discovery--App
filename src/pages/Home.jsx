@@ -122,7 +122,7 @@ function Home() {
             disabled={page === 1}
             className="bg-gray-800 text-white px-5 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-40"
           >
-            ← Previous
+            ← Prev
           </button>
 
 
