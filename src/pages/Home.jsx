@@ -90,8 +90,9 @@ function Home() {
 
       <Navbar onSearch={handleSearch} />
 
-      <Hero movies={movies} onBrowseClick={focusSearch} />
-
+      {query === "" && (
+        <Hero movies={movies} onBrowseClick={focusSearch} />
+      )}
       <div
         id="movies-section"
         className="max-w-7xl mx-auto px-6 pt-4 pb-12"
