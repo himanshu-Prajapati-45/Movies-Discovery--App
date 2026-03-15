@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import MovieCard from "../components/MovieCard";
@@ -10,17 +10,19 @@ function Home() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
 
-  // const searchRef = useRef(null);
+  // pagination edit state
+  const [editingPage, setEditingPage] = useState(false);
+  const [pageInput, setPageInput] = useState(page);
 
 
 
   // focus search bar from hero button
   const focusSearch = () => {
-  const input = document.getElementById("movie-search");
-  if (input) {
-    input.focus();
-  }
-};
+    const input = document.getElementById("movie-search");
+    if (input) {
+      input.focus();
+    }
+  };
 
 
 
@@ -88,7 +90,7 @@ function Home() {
 
       <Navbar onSearch={handleSearch} />
 
-      <Hero onBrowseClick={focusSearch} />
+      <Hero movies={movies} onBrowseClick={focusSearch} />
 
       <div
         id="movies-section"
@@ -100,9 +102,7 @@ function Home() {
         </h2>
 
 
-
         {/* Movie Grid */}
-
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
           {movies.map((movie) => (
@@ -114,44 +114,62 @@ function Home() {
 
 
         {/* Pagination */}
+        <div className="flex justify-center items-center gap-8 mt-10">
 
-        <div className="flex justify-center items-center gap-2 mt-10 flex-wrap">
-
+          {/* Previous */}
           <button
             onClick={() => setPage(page - 1)}
             disabled={page === 1}
-            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 disabled:opacity-40"
+            className="bg-gray-800 text-white px-5 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-40"
           >
-            Prev
+            ← Previous
           </button>
 
 
-          {[...Array(8)].map((_, i) => {
+          {/* Page Display / Edit */}
+          <div className="text-white text-lg font-semibold">
 
-            const pageNumber = i + 1;
+            Page{" "}
 
-            return (
-              <button
-                key={pageNumber}
-                onClick={() => setPage(pageNumber)}
-                className={`px-4 py-2 rounded ${
-                  page === pageNumber
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-800 text-white hover:bg-gray-700"
-                }`}
+            {editingPage ? (
+              <input
+                type="number"
+                value={pageInput}
+                onChange={(e) => setPageInput(e.target.value)}
+                onBlur={() => setEditingPage(false)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    const value = Number(pageInput);
+                    if (value > 0 && value <= 500) {
+                      setPage(value);
+                    }
+                    setEditingPage(false);
+                  }
+                }}
+                className="w-16 text-center bg-gray-900 border border-gray-700 rounded outline-none"
+                autoFocus
+              />
+            ) : (
+              <span
+                onClick={() => {
+                  setEditingPage(true);
+                  setPageInput(page);
+                }}
+                className="cursor-pointer underline hover:text-red-400"
               >
-                {pageNumber}
-              </button>
-            );
+                {page}
+              </span>
+            )}
 
-          })}
+          </div>
 
 
+          {/* Next */}
           <button
             onClick={() => setPage(page + 1)}
-            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+            className="bg-gray-800 text-white px-5 py-2 rounded-lg hover:bg-gray-700"
           >
-            Next
+            Next →
           </button>
 
         </div>
