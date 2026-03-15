@@ -7,7 +7,9 @@ function MovieCard({ movie }) {
 
   return (
     <Link to={`/movie/${movie.id}`}>
-    <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300 cursor-pointer">
+    <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg 
+hover:scale-105 hover:shadow-[0_0_20px_rgba(225,225,225,0.3)] 
+transition-all duration-300 cursor-pointer">
 
       <img
         src={imageUrl}
