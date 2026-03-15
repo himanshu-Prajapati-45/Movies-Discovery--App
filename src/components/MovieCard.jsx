@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function MovieCard({ movie }) {
 
   const imageUrl = movie.poster_path
@@ -5,6 +6,7 @@ function MovieCard({ movie }) {
     : "https://via.placeholder.com/500x750?text=No+Image";
 
   return (
+    <Link to = '/movie/${movie.id}'>
     <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300 cursor-pointer">
 
       <img
@@ -26,6 +28,7 @@ function MovieCard({ movie }) {
       </div>
 
     </div>
+    </Link>
   );
 }
 
