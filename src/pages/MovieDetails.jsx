@@ -1,22 +1,48 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieDetails } from "../services/api";
+import { getMovieDetails, getMovieImages, getMovieCredits } from "../services/api";
 
 function MovieDetails() {
 
   const { id } = useParams();   // getting id from URL
-
   const [movie, setMovie] = useState(null);
+  const [images, setImages] = useState([]);
+  const [cast, setCast] = useState([]);
+  const [director, setDirector] = useState(null);
 
   useEffect(() => {
-    getMovieDetails(id)
-      .then((res) => {
-        setMovie(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
+
+  // movie details
+  getMovieDetails(id)
+    .then((res) => {
+      setMovie(res.data);
+    })
+    .catch((err) => console.log(err));
+
+  // movie images
+  getMovieImages(id)
+    .then((res) => {
+      setImages(res.data.backdrops.slice(0, 6));
+    })
+    .catch((err) => console.log(err));
+
+  // movie cast & director
+  getMovieCredits(id)
+    .then((res) => {
+
+      setCast(res.data.cast.slice(0, 10));
+
+      const directorData = res.data.crew.find(
+        (person) => person.job === "Director"
+      );
+
+      setDirector(directorData);
+
+    })
+    .catch((err) => console.log(err));
+
+}, [id]);
 
   if (!movie) {
     return <p className="text-white p-10">Loading...</p>;

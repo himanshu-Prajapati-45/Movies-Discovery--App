@@ -24,6 +24,14 @@ export const getTrendingMovies = () => {
 
 export const getTopRatedMovies = () => {
   return api.get(`/movie/top_rated?api_key=${API_KEY}`);
-}
+};
+
+export const getMovieImages = (id) => {
+  return api.get(`/movie/${id}/images?api_key=${API_KEY}`);
+};
+
+export const getMovieCredits = (id) => {
+  return api.get(`/movie/${id}/credits?api_key=${API_KEY}`);
+};
 
 export default api;
