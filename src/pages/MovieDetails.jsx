@@ -123,7 +123,9 @@ function MovieDetails() {
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
 
-            {cast.map((actor) => (
+            {cast
+            .filter(actor => actor.profile_path)
+            .map((actor) => (
 
               <div
                 key={actor.id}

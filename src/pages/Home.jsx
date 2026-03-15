@@ -106,7 +106,9 @@ function Home() {
         {/* Movie Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-          {movies.map((movie) => (
+          {movies
+          .filter(movie => movie.poster_path)
+          .map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
 
