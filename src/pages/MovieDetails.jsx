@@ -68,6 +68,18 @@ function MovieDetails() {
               ⭐ {movie.vote_average}
             </p>
 
+            <div className="flex flex-wrap gap-2 mt-3">
+
+            {movie.genres.map((genre) => (
+              <span
+                key={genre.id}
+                className="bg-gray-800 px-3 py-1 rounded-full text-sm"
+              >
+                {genre.name}
+              </span>
+            ))}
+          </div>
+
             <p className="text-gray-400 mt-4 max-w-xl">
               {movie.overview}
             </p>
@@ -76,6 +88,13 @@ function MovieDetails() {
               Release Date: {movie.release_date}
             </p>
 
+            <p className="text-gray-300 mt-2">
+              Runtime: {movie.runtime} min
+            </p>
+
+            <p className="text-gray-300">
+              Language: {movie.original_language.toUpperCase()}
+            </p>
           </div>
 
         </div>
