@@ -1,37 +1,56 @@
-import { useState } from "react";
-
-
 function Navbar({ onSearch }) {
 
-  const [search, setSearch] = useState("");
-
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-    onSearch(value);
-  };
-
   return (
-    <nav className="w-full fixed top-0 z-50 backdrop-blur-md bg-black/40 border-b border-white/10">
+    <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-white/10 border-b border-white/20 shadow-lg shadow-black/30">
 
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-        <h1 className="text-2xl font-bold text-red-500">
-           MovieVerse
+        {/* Logo */}
+        <h1 className="text-2xl font-bold text-red-500 tracking-wide cursor-pointer hover:text-red-400 transition duration-300">
+          MovieVerse
         </h1>
 
-        <input
-          type="text"
-          placeholder="Search movies..."
-          value={search}
-          onChange={handleSearch}
-          className="bg-gray-900 text-white px-4 py-2 rounded-lg border border-gray-700"
-        />
+
+        {/* Navigation */}
+        <div className="hidden md:flex items-center gap-8 text-gray-200 font-medium">
+
+          <button className="hover:text-red-500 transition duration-200">
+            Home
+          </button>
+
+          <button className="hover:text-red-500 transition duration-200">
+            Trending
+          </button>
+
+          <button className="hover:text-red-500 transition duration-200">
+            Top Rated
+          </button>
+
+        </div>
+
+
+        {/* Search */}
+        <div className="relative w-56">
+
+          <input
+            id="movie-search"
+            type="text"
+            placeholder="Search movies..."
+            onChange={(e) => onSearch(e.target.value)}
+            className="w-full px-4 py-2 pl-10 rounded-lg bg-white/20 backdrop-blur-md text-white placeholder-gray-300 border border-white/30 outline-none focus:ring-2 focus:ring-red-500 transition"
+          />
+
+          <span className="absolute left-3 top-2.5 text-gray-300">
+            🔍
+          </span>
+
+        </div>
 
       </div>
 
     </nav>
   );
+
 }
 
 export default Navbar;

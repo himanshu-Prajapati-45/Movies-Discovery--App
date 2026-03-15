@@ -6,8 +6,8 @@ const api = axios.create({
   baseURL: "https://api.themoviedb.org/3"
 });
 
-export const getPopularMovies = () => {
-  return api.get(`/movie/popular?api_key=${API_KEY}`);
+export const getPopularMovies = (page = 1) => {
+  return api.get(`/movie/popular?api_key=${API_KEY}&page=${page}`);
 };
 
 export const searchMovies = (query) => {

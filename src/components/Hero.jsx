@@ -1,4 +1,4 @@
-function Hero() {
+function Hero({ onBrowseClick }) {
   return (
     <section className="min-h-[70vh] flex items-center justify-center text-center px-6">
       <div>
@@ -11,12 +11,14 @@ function Hero() {
           Explore trending movies, top rated films, and hidden cinematic gems.
         </p>
 
-        <button className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-lg text-lg transition">
+        <button
+          onClick={onBrowseClick}
+          className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg"
+        >
           Browse Movies
         </button>
 
       </div>
-
     </section>
   );
 }
