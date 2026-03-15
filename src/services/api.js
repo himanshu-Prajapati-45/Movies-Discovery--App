@@ -14,4 +14,8 @@ export const searchMovies = (query) => {
   return api.get(`/search/movie?api_key=${API_KEY}&query=${query}`);
 };
 
+export const getMovieDetails = (id) => {
+  return api.get(`/movie/${id}?api_key=${API_KEY}`);
+};
+
 export default api;
