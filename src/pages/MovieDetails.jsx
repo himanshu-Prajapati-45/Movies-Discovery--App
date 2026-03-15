@@ -1,48 +1,42 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieDetails } from "../services/api";
-import { getMovieDetails, getMovieImages, getMovieCredits } from "../services/api";
+
+import { getMovieDetails, getMovieCredits } from "../services/api";
 
 function MovieDetails() {
 
-  const { id } = useParams();   // getting id from URL
+  const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [images, setImages] = useState([]);
+  
   const [cast, setCast] = useState([]);
   const [director, setDirector] = useState(null);
 
   useEffect(() => {
 
-  // movie details
-  getMovieDetails(id)
-    .then((res) => {
-      setMovie(res.data);
-    })
-    .catch((err) => console.log(err));
+    // movie details
+    getMovieDetails(id)
+      .then((res) => {
+        setMovie(res.data);
+      })
+      .catch((err) => console.log(err));
 
-  // movie images
-  getMovieImages(id)
-    .then((res) => {
-      setImages(res.data.backdrops.slice(0, 6));
-    })
-    .catch((err) => console.log(err));
 
-  // movie cast & director
-  getMovieCredits(id)
-    .then((res) => {
+    // movie cast & director
+    getMovieCredits(id)
+      .then((res) => {
 
-      setCast(res.data.cast.slice(0, 10));
+        setCast(res.data.cast.slice(0, 10));
 
-      const directorData = res.data.crew.find(
-        (person) => person.job === "Director"
-      );
+        const directorData = res.data.crew.find(
+          (person) => person.job === "Director"
+        );
 
-      setDirector(directorData);
+        setDirector(directorData);
 
-    })
-    .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
 
-}, [id]);
+  }, [id]);
 
   if (!movie) {
     return <p className="text-white p-10">Loading...</p>;
@@ -53,29 +47,113 @@ function MovieDetails() {
   return (
     <div className="min-h-screen bg-black text-white p-10">
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
 
-        <img
-          src={poster}
-          alt={movie.title}
-          className="w-full max-w-md rounded-lg"
-        />
+        {/* MOVIE INFO */}
+        <div className="flex flex-col md:flex-row gap-10">
 
-        <h1 className="text-4xl font-bold mt-6">
-          {movie.title}
-        </h1>
+          <img
+            src={poster}
+            alt={movie.title}
+            className="w-full max-w-sm rounded-lg shadow-xl"
+          />
 
-        <p className="text-yellow-400 mt-2">
-          ⭐ {movie.vote_average}
-        </p>
+          <div>
 
-        <p className="text-gray-400 mt-4">
-          {movie.overview}
-        </p>
+            <h1 className="text-4xl font-bold">
+              {movie.title}
+            </h1>
 
-        <p className="mt-4">
-          Release Date: {movie.release_date}
-        </p>
+            <p className="text-yellow-400 mt-3 text-lg">
+              ⭐ {movie.vote_average}
+            </p>
+
+            <p className="text-gray-400 mt-4 max-w-xl">
+              {movie.overview}
+            </p>
+
+            <p className="mt-4 text-gray-300">
+              Release Date: {movie.release_date}
+            </p>
+
+          </div>
+
+        </div>
+
+
+        {/* DIRECTOR */}
+        {director && (
+          <div className="mt-16">
+
+            <h2 className="text-2xl font-bold mb-6">
+              Director
+            </h2>
+
+            <div className="flex items-center gap-6 bg-gray-900 p-6 rounded-lg w-fit">
+
+              <img
+                src={`https://image.tmdb.org/t/p/w185${director.profile_path}`}
+                className="w-24 h-24 rounded-full object-cover"
+              />
+
+              <div>
+
+                <p className="text-xl font-semibold">
+                  {director.name}
+                </p>
+
+                <p className="text-gray-400">
+                  Director
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+        )}
+
+
+        {/* CAST */}
+        <div className="mt-16">
+
+          <h2 className="text-2xl font-bold mb-6">
+            Cast
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+
+            {cast.map((actor) => (
+
+              <div
+                key={actor.id}
+                className="bg-gray-900 rounded-lg overflow-hidden hover:scale-105 transition duration-300"
+              >
+
+                <img
+                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                  className="w-full h-60 object-cover"
+                />
+
+                <div className="p-3">
+
+                  <p className="font-semibold">
+                    {actor.name}
+                  </p>
+
+                  <p className="text-gray-400 text-sm">
+                    {actor.character}
+                  </p>
+
+                </div>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        </div>
 
       </div>
 
