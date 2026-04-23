@@ -3,24 +3,22 @@ import Home from "./pages/Home";
 import MovieDetails from "./pages/MovieDetails";
 import Trending from "./pages/Trending";
 import TopRated from "./pages/TopRated";
+import Wishlist from "./pages/Wishlist";
+import { WishlistProvider } from "./context/WishlistContext";
 
 function App() {
   return (
-    <BrowserRouter>
-
-      <Routes>
-
-        <Route path="/" element={<Home />} />
-
-        <Route path="/movie/:id" element={<MovieDetails />} />
-
-        <Route path="/trending" element={<Trending />} />
-
-        <Route path="/toprated" element={<TopRated />} />
-
-      </Routes>
-
-    </BrowserRouter>
+    <WishlistProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/trending" element={<Trending />} />
+          <Route path="/toprated" element={<TopRated />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+        </Routes>
+      </BrowserRouter>
+    </WishlistProvider>
   );
 }
 

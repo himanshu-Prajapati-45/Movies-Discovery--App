@@ -1,13 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useWishlist } from '../context/WishlistContext';
 
 function Navbar({ onSearch }) {
   const location = useLocation();
+  const { wishlist } = useWishlist();
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Trending', path: '/trending' },
     { name: 'Top Rated', path: '/toprated' },
+    { name: 'Wishlist', path: '/wishlist' },
   ];
 
   return (
@@ -33,7 +36,9 @@ function Navbar({ onSearch }) {
                 location.pathname === link.path ? 'text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
-              {link.name}
+              <span className="flex items-center gap-2">
+                {link.name}
+              </span>
               {location.pathname === link.path && (
                 <motion.div 
                   layoutId="nav-underline"
@@ -62,4 +67,5 @@ function Navbar({ onSearch }) {
   );
 }
 
-export default Navbar;
+export default Navbar;
+

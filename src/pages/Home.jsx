@@ -65,9 +65,10 @@ function Home() {
     >
       <Navbar onSearch={handleSearch} />
 
-      {query === "" && movies.length > 0 && (
-        <Hero movies={movies} onBrowseClick={focusSearch} />
+      {query === "" && (
+        <Hero onBrowseClick={focusSearch} />
       )}
+
 
       <div id="movies-section" className="max-w-7xl mx-auto px-6 pt-12 pb-12">
         <div className="flex items-center justify-between mb-8">
