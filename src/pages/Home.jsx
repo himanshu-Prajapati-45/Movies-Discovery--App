@@ -85,7 +85,6 @@ function Home() {
           )}
         </div>
 
-        {/* Movie Grid */}
         <AnimatePresence mode="wait">
           {loading ? (
             <motion.div
@@ -96,7 +95,7 @@ function Home() {
             >
               <MovieGridSkeleton count={12} />
             </motion.div>
-          ) : (
+          ) : movies.length > 0 ? (
             <motion.div
               key="grid"
               initial={{ opacity: 0 }}
@@ -104,13 +103,35 @@ function Home() {
               className="grid grid-cols-2 md:grid-cols-4 gap-8"
             >
               {movies
-                .filter(movie => movie.poster_path)
+                .filter((movie) => movie.poster_path)
                 .map((movie) => (
                   <MovieCard key={movie.id} movie={movie} />
                 ))}
             </motion.div>
+          ) : (
+            <motion.div
+              key="no-results"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center justify-center py-20 text-center"
+            >
+              <div className="w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center mb-6 border border-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">No movies found</h3>
+              <p className="text-gray-500 max-w-xs">
+                We couldn't find any movies matching "{query}". Try searching for something else.
+              </p>
+              <button 
+                onClick={() => handleSearch("")}
+                className="mt-6 text-red-500 hover:text-red-400 font-medium transition-colors"
+              >
+                Clear search and browse trending
+              </button>
+            </motion.div>
           )}
         </AnimatePresence>
+
 
         {/* Pagination */}
         {!loading && movies.length > 0 && (
