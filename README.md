@@ -5,8 +5,7 @@
 ---
 
 ## 🚀 Live Demo
-**[Insert Your Deployment Link Here (e.g., Vercel or Netlify)]**
-
+**[Check out the Live Site here!](https://movies-discovery-app-cohf.vercel.app)**
 ---
 
 ## ✨ Features
@@ -66,25 +65,8 @@ VITE_TMDB_API_KEY=your_api_key_here
 npm run dev
 ```
 
-
 ### 👨‍💻 Developed by Himanshu Prajapati
 **[GitHub](https://github.com/himanshu-Prajapati-45)**
+**[LinkeDin](https://www.linkedin.com/in/himanshu-prajapati-7b603a375/)**
 
 
-
-ploying)*
-
----
-
-## 📄 License
-This project is open-source and available under the **MIT License**.
-
----
-
-### 👨‍💻 Developed by Himanshu Prajapati
-**[LinkedIn](https://www.linkedin.com/in/your-profile)** | **[Portfolio](https://your-portfolio.com)** | **[GitHub](https://github.com/himanshu-Prajapati-45)**
-
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
