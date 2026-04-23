@@ -30,4 +30,12 @@ export const getMovieCredits = (id) => {
   return api.get(`/movie/${id}/credits?api_key=${API_KEY}`);
 };
 
-export default api;
+export const getMovieVideos = (id) => {
+  return api.get(`/movie/${id}/videos?api_key=${API_KEY}`);
+};
+
+export const getSimilarMovies = (id) => {
+  return api.get(`/movie/${id}/similar?api_key=${API_KEY}`);
+};
+
+export default api;

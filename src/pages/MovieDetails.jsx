@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getMovieDetails, getMovieCredits } from "../services/api";
+import { getMovieDetails, getMovieCredits, getMovieVideos, getSimilarMovies } from "../services/api";
+import TrailerModal from "../components/TrailerModal";
+import MovieCard from "../components/MovieCard";
 
 function MovieDetails() {
   const { id } = useParams();
@@ -9,6 +11,8 @@ function MovieDetails() {
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
   const [director, setDirector] = useState(null);
+  const [trailerKey, setTrailerKey] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,15 +21,24 @@ function MovieDetails() {
 
     Promise.all([
       getMovieDetails(id),
-      getMovieCredits(id)
-    ]).then(([detailsRes, creditsRes]) => {
+      getMovieCredits(id),
+      getMovieVideos(id)
+    ]).then(([detailsRes, creditsRes, videosRes]) => {
       setMovie(detailsRes.data);
       setCast(creditsRes.data.cast.slice(0, 10));
+      
       const directorData = creditsRes.data.crew.find(
         (person) => person.job === "Director"
       );
       setDirector(directorData);
-    }).catch(err => {
+
+      // Find first trailer
+      const trailer = videosRes.data.results.find(
+        (vid) => vid.type === "Trailer" && vid.site === "YouTube"
+      );
+      setTrailerKey(trailer?.key || videosRes.data.results[0]?.key);
+    })
+.catch(err => {
       console.error(err);
     }).finally(() => {
       setLoading(false);
@@ -51,8 +64,14 @@ function MovieDetails() {
       animate={{ opacity: 1 }}
       className="min-h-screen bg-black text-white pb-20"
     >
+      <TrailerModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        videoKey={trailerKey} 
+      />
+
       {/* Hero Backdrop */}
-      <div className="relative h-[60vh] w-full overflow-hidden">
+      <div className="relative h-[60vh] md:h-[75vh] w-full overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
         <motion.img
           initial={{ scale: 1.1 }}
@@ -89,7 +108,8 @@ function MovieDetails() {
                 <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
                   {movie.title}
                 </h1>
-                <div className="flex flex-wrap items-center gap-4 text-lg">
+                
+                <div className="flex flex-wrap items-center gap-4 text-lg mb-8">
                   <span className="text-yellow-400 font-bold flex items-center gap-1">
                     ⭐ {movie.vote_average?.toFixed(1)}
                   </span>
@@ -98,13 +118,23 @@ function MovieDetails() {
                   <span className="text-gray-400">•</span>
                   <span>{movie.runtime} min</span>
                   <div className="flex gap-2">
-                    {movie.genres.map(g => (
+                    {movie.genres.slice(0, 2).map(g => (
                       <span key={g.id} className="text-sm bg-white/10 px-3 py-1 rounded-full border border-white/10">
                         {g.name}
                       </span>
                     ))}
                   </div>
                 </div>
+
+                {trailerKey && (
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-all shadow-xl shadow-red-600/30 active:scale-95"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    Watch Trailer
+                  </button>
+                )}
               </motion.div>
             </div>
           </div>
@@ -138,7 +168,7 @@ function MovieDetails() {
             </section>
           )}
 
-          <section>
+          <section className="mb-20">
             <h2 className="text-2xl font-bold mb-8 text-gradient">Top Cast</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
               {cast.filter(a => a.profile_path).map((actor, idx) => (
@@ -164,9 +194,10 @@ function MovieDetails() {
           </section>
         </div>
 
+
         {/* Sidebar Info */}
         <div className="space-y-8">
-          <div className="bg-white/5 border border-white/10 p-6 rounded-3xl">
+          <div className="bg-white/5 border border-white/10 p-6 rounded-3xl sticky top-24">
             <h3 className="text-xl font-bold mb-6">Information</h3>
             <div className="space-y-4">
               <div>
@@ -177,6 +208,14 @@ function MovieDetails() {
                 <p className="text-gray-500 text-sm uppercase tracking-wider">Original Language</p>
                 <p className="text-white font-medium">{movie.original_language?.toUpperCase()}</p>
               </div>
+              <div>
+                <p className="text-gray-500 text-sm uppercase tracking-wider">Production</p>
+                <div className="space-y-1 mt-1">
+                  {movie.production_companies.slice(0, 3).map(c => (
+                    <p key={c.id} className="text-white text-sm">{c.name}</p>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -184,6 +223,5 @@ function MovieDetails() {
     </motion.div>
   );
 }
-
 
 export default MovieDetails;
