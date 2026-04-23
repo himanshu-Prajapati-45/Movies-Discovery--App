@@ -18,7 +18,7 @@
 - **Skeleton Loaders**: Professional loading states that eliminate layout shift and provide immediate visual feedback.
 
 ### 🎥 Cinematic Discovery
-- **Embedded Trailers**: Watch official YouTube trailers directly inside the app using a sleek, custom-built modal — no redirects to YouTube.
+- **Embedded Trailers**: Watch official YouTube trailers directly inside the app using a sleek, custom-built modal.
 - **Search & Filtering**: Real-time movie search with dedicated "No Results Found" handling and "Trending/Top Rated" categories.
 - **Deep Info**: Detailed movie pages showing cast members, directors, genres, runtime, and production info.
 
@@ -66,10 +66,13 @@ VITE_TMDB_API_KEY=your_api_key_here
 npm run dev
 ```
 
----
 
-## 📸 Screenshots
-*(Add your screenshots here after deploying)*
+### 👨‍💻 Developed by Himanshu Prajapati
+**[GitHub](https://github.com/himanshu-Prajapati-45)**
+
+
+
+ploying)*
 
 ---
 
